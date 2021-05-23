@@ -20,7 +20,7 @@ public class ArraySorter {
     private static void swapParentForHeap(double[] numbersArray, int parentIndex, int lastIndex) {
         int parent = parentIndex;
 
-        while (isLeftChildExist(numbersArray, parent, lastIndex)) {
+        while (isLeftChildExist(parent, lastIndex)) {
             int leftChildIndex = parent * 2 + 1;
 
             if (!(numbersArray[parent] < numbersArray[leftChildIndex])) {
@@ -33,7 +33,7 @@ public class ArraySorter {
 
         parent = parentIndex;
 
-        while (isRightChildExist(numbersArray, parent, lastIndex)) {
+        while (isRightChildExist(parent, lastIndex)) {
             int rightChildIndex = parent * 2 + 2;
 
             if (!(numbersArray[parent] < numbersArray[rightChildIndex])) {
@@ -140,11 +140,11 @@ public class ArraySorter {
         return minNumberIndex;
     }
 
-    private static boolean isLeftChildExist(double[] numbersArray, int elementIndex, int lastIndex) {
+    private static boolean isLeftChildExist(int elementIndex, int lastIndex) {
         return (2 * elementIndex + 1) <= lastIndex;
     }
 
-    private static boolean isRightChildExist(double[] numbersArray, int elementIndex, int lastIndex) {
+    private static boolean isRightChildExist(int elementIndex, int lastIndex) {
         return (2 * elementIndex + 2) <= lastIndex;
     }
 }
