@@ -1,18 +1,11 @@
 public class ArraySorter {
     @Check
     public static void heapSort(double[] numbersArray) {
-        if (numbersArray.length == 0) {
-            return;
-        }
-
-        rearrangeForHeapStructure(numbersArray, numbersArray.length - 1);
-
         int lastIndex = numbersArray.length - 1;
-        swapTwoArrayElements(numbersArray, 0, lastIndex);
 
         for (int i = lastIndex; i > 0; i--) {
-            swapParentForHeap(numbersArray, 0, i - 1);
-            swapTwoArrayElements(numbersArray, 0, i - 1);
+            rearrangeForHeapStructure(numbersArray, i);
+            swapTwoArrayElements(numbersArray, 0, i);
         }
     }
 
@@ -25,21 +18,29 @@ public class ArraySorter {
     }
 
     private static void swapParentForHeap(double[] numbersArray, int parentIndex, int lastIndex) {
-        if (isLeftChildExist(numbersArray, parentIndex, lastIndex)) {
-            int leftChildIndex = parentIndex * 2 + 1;
+        int parent = parentIndex;
 
-            if (numbersArray[parentIndex] < numbersArray[leftChildIndex]) {
-                swapTwoArrayElements(numbersArray, parentIndex, leftChildIndex);
-                swapParentForHeap(numbersArray, leftChildIndex, lastIndex);
+        while (isLeftChildExist(numbersArray, parent, lastIndex)) {
+            int leftChildIndex = parent * 2 + 1;
+
+            if (!(numbersArray[parent] < numbersArray[leftChildIndex])) {
+                break;
+            } else {
+                swapTwoArrayElements(numbersArray, parent, leftChildIndex);
+                parent = leftChildIndex;
             }
         }
 
-        if (isRightChildExist(numbersArray, parentIndex, lastIndex)) {
-            int rightChildIndex = parentIndex * 2 + 2;
+        parent = parentIndex;
 
-            if (numbersArray[parentIndex] < numbersArray[rightChildIndex]) {
-                swapTwoArrayElements(numbersArray, parentIndex, rightChildIndex);
-                swapParentForHeap(numbersArray, rightChildIndex, lastIndex);
+        while (isRightChildExist(numbersArray, parent, lastIndex)) {
+            int rightChildIndex = parent * 2 + 2;
+
+            if (!(numbersArray[parent] < numbersArray[rightChildIndex])) {
+                break;
+            } else {
+                swapTwoArrayElements(numbersArray, parent, rightChildIndex);
+                parent = rightChildIndex;
             }
         }
     }
@@ -52,11 +53,10 @@ public class ArraySorter {
     }
 
     public static void quickSortByRecursion(double[] numbersArray, int fromIndex, int toIndex) {
-
         if (fromIndex < toIndex) {
             int leftIndex = fromIndex;
             int rightIndex = toIndex;
-            double baseValue = numbersArray[(leftIndex + rightIndex) / 2];
+            double baseValue = numbersArray[leftIndex + (rightIndex - leftIndex) / 2];
 
             while (leftIndex < rightIndex) {
                 while (numbersArray[leftIndex] < baseValue) {
@@ -83,7 +83,7 @@ public class ArraySorter {
     @Check
     public static void sortByInserts(double[] numbersArray) {
         for (int i = 1; i < numbersArray.length; i++) {
-            for (int j = i; j > 0 && numbersArray[j] < numbersArray[j - 1]; j--) {
+            for (int j = i; (j > 0) && (numbersArray[j] < numbersArray[j - 1]); j--) {
                 swapTwoArrayElements(numbersArray, j - 1, j);
             }
         }
@@ -141,10 +141,10 @@ public class ArraySorter {
     }
 
     private static boolean isLeftChildExist(double[] numbersArray, int elementIndex, int lastIndex) {
-        return 2 * elementIndex + 1 <= lastIndex;
+        return (2 * elementIndex + 1) <= lastIndex;
     }
 
     private static boolean isRightChildExist(double[] numbersArray, int elementIndex, int lastIndex) {
-        return 2 * elementIndex + 2 <= lastIndex;
+        return (2 * elementIndex + 2) <= lastIndex;
     }
 }

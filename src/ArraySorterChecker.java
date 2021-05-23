@@ -56,6 +56,7 @@ public class ArraySorterChecker {
             for (Method m : methods) {
                 printCheckingMessage(m, testArray);
             }
+
             System.out.println("-----------------------------------------------------------------");
         }
     }
@@ -68,25 +69,24 @@ public class ArraySorterChecker {
 
     private static void printCheckingMessage(Method m, TestData testArray) {
         try {
-            double[] checkingArray = Arrays.copyOf(testArray.getUnsortedArray(), testArray.getUnsortedArray().length); //keep TestData fields unmodified
-            m.invoke(null, checkingArray);
+            double[] sortedArray = Arrays.copyOf(testArray.getUnsortedArray(), testArray.getUnsortedArray().length); //keep TestData fields unmodified
+            m.invoke(null, sortedArray);
 
-            if (Arrays.equals(checkingArray, testArray.getSortedArray())) {
-                printSuccessMessage(m, checkingArray);
+            if (Arrays.equals(sortedArray, testArray.getSortedArray())) {
+                printSuccessMessage(m);
             } else {
-                printNotSuccessMessage(m, testArray);
+                printNotSuccessMessage(m, sortedArray);
             }
-
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }
 
-    private static void printNotSuccessMessage(Method m, TestData testArray) {
-        System.out.printf("%15s is NOT SUCCESS sorting %n", (m.getName()));
+    private static void printNotSuccessMessage(Method m, double[] resultArray) {
+        System.out.printf("%15s is NOT SUCCESS sorting: %s%n", (m.getName()), Arrays.toString(resultArray));
     }
 
-    private static void printSuccessMessage(Method m, double[] checkingArray) {
+    private static void printSuccessMessage(Method m) {
         System.out.printf("%15s is SUCCESS sorting %n", (m.getName()));
     }
 }
