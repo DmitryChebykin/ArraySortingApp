@@ -2,45 +2,40 @@ public class ArraySorter {
     @Check
     public static void heapSort(double[] numbersArray) {
         int lastIndex = numbersArray.length - 1;
+        if (lastIndex < 0) {
+            return;
+        }
 
-        for (int i = lastIndex; i > 0; i--) {
-            rearrangeForHeapStructure(numbersArray, i);
-            swapTwoArrayElements(numbersArray, 0, i);
+        buildHeap(numbersArray, lastIndex);
+        swap(numbersArray, 0, lastIndex);
+
+        for (int i = lastIndex - 1; i > 0; i--) {
+            heapifyParent(numbersArray, 0, i);
+            swap(numbersArray, 0, i);
         }
     }
 
-    private static void rearrangeForHeapStructure(double[] numbersArray, int lastIndex) {
+    private static void buildHeap(double[] numbersArray, int lastIndex) {
         int mediumIndex = (lastIndex + 1) / 2 - 1;
 
         for (int i = mediumIndex; i >= 0; i--) {
-            swapParentForHeap(numbersArray, i, lastIndex);
+            heapifyParent(numbersArray, i, lastIndex);
         }
     }
 
-    private static void swapParentForHeap(double[] numbersArray, int parentIndex, int lastIndex) {
+    private static void heapifyParent(double[] numbersArray, int parentIndex, int lastIndex) {
         int parent = parentIndex;
 
         while (isLeftChildExist(parent, lastIndex)) {
             int leftChildIndex = parent * 2 + 1;
+            int rightChildIndex = (isRightChildExist(parent, lastIndex)) ? parent * 2 + 2 : leftChildIndex;
+            int swapIndex = (numbersArray[leftChildIndex] > numbersArray[rightChildIndex]) ? leftChildIndex : rightChildIndex;
 
-            if (!(numbersArray[parent] < numbersArray[leftChildIndex])) {
+            if (!(numbersArray[parent] < numbersArray[swapIndex])) {
                 break;
             } else {
-                swapTwoArrayElements(numbersArray, parent, leftChildIndex);
-                parent = leftChildIndex;
-            }
-        }
-
-        parent = parentIndex;
-
-        while (isRightChildExist(parent, lastIndex)) {
-            int rightChildIndex = parent * 2 + 2;
-
-            if (!(numbersArray[parent] < numbersArray[rightChildIndex])) {
-                break;
-            } else {
-                swapTwoArrayElements(numbersArray, parent, rightChildIndex);
-                parent = rightChildIndex;
+                swap(numbersArray, parent, swapIndex);
+                parent = swapIndex;
             }
         }
     }
@@ -68,7 +63,7 @@ public class ArraySorter {
                 }
 
                 if (leftIndex <= rightIndex) {
-                    swapTwoArrayElements(numbersArray, leftIndex, rightIndex);
+                    swap(numbersArray, leftIndex, rightIndex);
                     leftIndex++;
                     rightIndex--;
                 }
@@ -84,7 +79,7 @@ public class ArraySorter {
     public static void sortByInserts(double[] numbersArray) {
         for (int i = 1; i < numbersArray.length; i++) {
             for (int j = i; (j > 0) && (numbersArray[j] < numbersArray[j - 1]); j--) {
-                swapTwoArrayElements(numbersArray, j - 1, j);
+                swap(numbersArray, j - 1, j);
             }
         }
     }
@@ -97,7 +92,7 @@ public class ArraySorter {
         while (j != 1) {
             for (int i = 0; i < j - 1; i++) {
                 if (numbersArray[i] > numbersArray[i + 1]) {
-                    swapTwoArrayElements(numbersArray, i, i + 1);
+                    swap(numbersArray, i, i + 1);
                     replaceCount++;
                 }
             }
@@ -116,14 +111,14 @@ public class ArraySorter {
 
         for (int i = 0; i < numbersArray.length - 1; i++) {
             int minNumberIndex = getMinNumberIndex(numbersArray, i, endIndex);
-            swapTwoArrayElements(numbersArray, i, minNumberIndex);
+            swap(numbersArray, i, minNumberIndex);
         }
     }
 
-    private static void swapTwoArrayElements(double[] array, int i, int j) {
-        double temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
+    private static void swap(double[] array, int firstElementIndex, int secondElementIndex) {
+        double temp = array[firstElementIndex];
+        array[firstElementIndex] = array[secondElementIndex];
+        array[secondElementIndex] = temp;
     }
 
     private static int getMinNumberIndex(double[] numbersArray, int startIndex, int endIndex) {
