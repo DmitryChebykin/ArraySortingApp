@@ -6,9 +6,15 @@ public class InsertsSorter extends ArraySorter {
 
     private static void sortByInserts(double[] numbersArray) {
         for (int i = 1; i < numbersArray.length; i++) {
-            for (int j = i; (j > 0) && (numbersArray[j] < numbersArray[j - 1]); j--) {
-                swap(numbersArray, j - 1, j);
+            double temp = numbersArray[i];
+            int j = i - 1;
+
+            while (j >= 0 && numbersArray[j] > temp) {
+                numbersArray[j + 1] = numbersArray[j];
+                j = j - 1;
             }
+
+            numbersArray[j + 1] = temp;
         }
     }
 }

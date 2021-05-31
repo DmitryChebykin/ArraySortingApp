@@ -21,18 +21,18 @@ public class ArraySorterChecker {
 
     private static TestData[] getDemoArraysSet() {
         return new TestData[]{
-                new TestData(new double[]{}),
-                new TestData(new double[]{1}),
-                new TestData(new double[]{1, 2}),
-                new TestData(new double[]{2, 1}),
-                new TestData(new double[]{-1, -1}),
-                new TestData(new double[]{1, 1, 1024, -2}),
-                new TestData(new double[]{0, 0}),
-                new TestData(new double[]{0}),
+//                new TestData(new double[]{}),
+//                new TestData(new double[]{1}),
+//                new TestData(new double[]{1, 2}),
+//                new TestData(new double[]{2, 1}),
+//                new TestData(new double[]{-1, -1}),
+//                new TestData(new double[]{1, 1, 1024, -2}),
+//                new TestData(new double[]{0, 0}),
+//                new TestData(new double[]{0}),
                 new TestData(new double[]{1, 4, 7, 9, -5, 77, 77, 77, 44, 44, 4, -852, 67, -55, -1, 23}),
-                new TestData(new double[]{-2}),
-                new TestData(new double[]{-2, -4, 8, -45, -10255, 1, 2, 2, 2, 2, 3, 3, 3}),
-                new TestData(new double[]{10, 2, 3, 6, 8, 7, 1, 12}),
+//                new TestData(new double[]{-2}),
+//                new TestData(new double[]{-2, -4, 8, -45, -10255, 1, 2, 2, 2, 2, 3, 3, 3}),
+//                new TestData(new double[]{10, 2, 3, 6, 8, 7, 1, 12}),
         };
     }
 
