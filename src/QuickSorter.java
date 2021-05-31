@@ -5,9 +5,7 @@ public class QuickSorter extends ArraySorter {
     }
 
     private static void quickSort(double[] numbersArray) {
-        int from = 0;
-        int to = numbersArray.length - 1;
-        quickSortByRecursion(numbersArray, from, to);
+        quickSortByRecursion(numbersArray, 0, numbersArray.length - 1);
     }
 
     private static void quickSortByRecursion(double[] numbersArray, int fromIndex, int toIndex) {
