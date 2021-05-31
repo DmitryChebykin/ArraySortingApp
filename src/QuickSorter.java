@@ -11,30 +11,33 @@ public class QuickSorter extends ArraySorter {
     }
 
     private static void quickSortByRecursion(double[] numbersArray, int fromIndex, int toIndex) {
-        if (fromIndex < toIndex) {
-            int leftIndex = fromIndex;
-            int rightIndex = toIndex;
-            double baseValue = numbersArray[leftIndex + (rightIndex - leftIndex) / 2];
+        if (fromIndex >= toIndex) {
+            return;
+        }
 
-            while (leftIndex < rightIndex) {
-                while (numbersArray[leftIndex] < baseValue) {
-                    leftIndex++;
-                }
+        int leftIndex = fromIndex;
+        int rightIndex = toIndex;
 
-                while (numbersArray[rightIndex] > baseValue) {
-                    rightIndex--;
-                }
+        double baseValue = numbersArray[leftIndex + (rightIndex - leftIndex) / 2];
 
-                if (leftIndex <= rightIndex) {
-                    swap(numbersArray, leftIndex, rightIndex);
-                    leftIndex++;
-                    rightIndex--;
-                }
+        while (leftIndex <= rightIndex) {
+            while (numbersArray[leftIndex] < baseValue) {
+                leftIndex++;
             }
 
-            quickSortByRecursion(numbersArray, fromIndex, rightIndex);
+            while (numbersArray[rightIndex] > baseValue) {
+                rightIndex--;
+            }
 
-            quickSortByRecursion(numbersArray, leftIndex, toIndex);
+            if (leftIndex <= rightIndex) {
+                swap(numbersArray, leftIndex, rightIndex);
+                leftIndex++;
+                rightIndex--;
+            }
         }
+
+        quickSortByRecursion(numbersArray, fromIndex, rightIndex);
+
+        quickSortByRecursion(numbersArray, leftIndex, toIndex);
     }
 }
