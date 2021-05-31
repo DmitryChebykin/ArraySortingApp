@@ -37,10 +37,10 @@ public class HeapSorter extends ArraySorter {
 
             if (!(numbersArray[parent] < numbersArray[swapIndex])) {
                 break;
-            } else {
-                swap(numbersArray, parent, swapIndex);
-                parent = swapIndex;
             }
+
+            swap(numbersArray, parent, swapIndex);
+            parent = swapIndex;
         }
     }
 
