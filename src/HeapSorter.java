@@ -35,7 +35,7 @@ public class HeapSorter extends ArraySorter {
             int rightChildIndex = (isRightChildExist(parent, lastIndex)) ? parent * 2 + 2 : leftChildIndex;
             int swapIndex = (numbersArray[leftChildIndex] > numbersArray[rightChildIndex]) ? leftChildIndex : rightChildIndex;
 
-            if (!(numbersArray[parent] < numbersArray[swapIndex])) {
+            if (numbersArray[parent] >= numbersArray[swapIndex]) {
                 break;
             }
 
