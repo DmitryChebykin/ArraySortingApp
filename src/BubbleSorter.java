@@ -5,12 +5,15 @@ public class BubbleSorter extends ArraySorter {
     }
 
     private static void sortByBubble(double[] numbersArray) {
-        for (int j = numbersArray.length; j > 0; j--) {
-            boolean isSorted = true;
+        int maxIndex = numbersArray.length - 1;
 
-            for (int i = 0; i < j - 1; i++) {
-                if (numbersArray[i] > numbersArray[i + 1]) {
-                    swap(numbersArray, i, i + 1);
+        for (int i = maxIndex; i > 0; i--) {
+            boolean isSorted = true;
+            int lastIndex = i - 1;
+
+            for (int j = 0; j <= lastIndex; j++) {
+                if (numbersArray[j] > numbersArray[j + 1]) {
+                    swap(numbersArray, j, j + 1);
                     isSorted = false;
                 }
             }

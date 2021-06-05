@@ -5,7 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ArraySorterChecker {
-    public static final String[] CHECKED_CLASSES = new String[]{"BubbleSorter", "HeapSorter", "InsertsSorter", "QuickSorter", "SelectionSorter"};
+    private String[] checkedClassesNames;
+
+    public ArraySorterChecker(String[] checkedClassesNames) {
+        this.checkedClassesNames = checkedClassesNames;
+    }
 
     public static Class<?> getCheckedClass(String className) {
         Class<?> arraySorterClass = null;
@@ -48,10 +52,10 @@ public class ArraySorterChecker {
         return methods;
     }
 
-    public static void printMethodsCheckingInfo() {
-        for (String klass : CHECKED_CLASSES) {
+    public void printMethodsCheckingInfo() {
+        for (String className : checkedClassesNames) {
             TestData[] testData = getDemoArraysSet();
-            List<Method> methods = getCheckMarkedMethods(getCheckedClass(klass));
+            List<Method> methods = getCheckMarkedMethods(getCheckedClass(className));
 
             for (TestData testSet : testData) {
                 printHeaderMessage(testSet);
@@ -71,12 +75,12 @@ public class ArraySorterChecker {
         System.out.println("  Sorted array: " + Arrays.toString(testData.getSortedArray()));
     }
 
-    private static void printCheckingMessage(Method m, TestData testArray) {
+    private static void printCheckingMessage(Method m, TestData testData) {
         try {
-            double[] sortedArray = Arrays.copyOf(testArray.getUnsortedArray(), testArray.getUnsortedArray().length); //keep TestData fields unmodified
+            double[] sortedArray = Arrays.copyOf(testData.getUnsortedArray(), testData.getUnsortedArray().length); //keep TestData fields unmodified
             m.invoke(null, sortedArray);
 
-            if (Arrays.equals(sortedArray, testArray.getSortedArray())) {
+            if (Arrays.equals(sortedArray, testData.getSortedArray())) {
                 printSuccessMessage(m);
             } else {
                 printNotSuccessMessage(m, sortedArray);

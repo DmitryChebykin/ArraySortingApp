@@ -1,16 +1,12 @@
 public class HeapSorter extends ArraySorter {
     @Check
     public static void sort(double[] numbersArray) {
-        heapSort(numbersArray);
-    }
-
-    private static void heapSort(double[] numbersArray) {
         int lastIndex = numbersArray.length - 1;
         if (lastIndex < 0) {
             return;
         }
 
-        buildHeap(numbersArray, lastIndex);
+        buildHeap(numbersArray);
         swap(numbersArray, 0, lastIndex);
 
         for (int i = lastIndex - 1; i > 0; i--) {
@@ -19,7 +15,8 @@ public class HeapSorter extends ArraySorter {
         }
     }
 
-    private static void buildHeap(double[] numbersArray, int lastIndex) {
+    private static void buildHeap(double[] numbersArray) {
+        int lastIndex = numbersArray.length - 1;
         int mediumIndex = (lastIndex + 1) / 2 - 1;
 
         for (int i = mediumIndex; i >= 0; i--) {
@@ -28,19 +25,19 @@ public class HeapSorter extends ArraySorter {
     }
 
     private static void heapifyParent(double[] numbersArray, int parentIndex, int lastIndex) {
-        int parent = parentIndex;
+        int examinedParentIndex = parentIndex;
 
-        while (isLeftChildExist(parent, lastIndex)) {
-            int leftChildIndex = parent * 2 + 1;
-            int rightChildIndex = (isRightChildExist(parent, lastIndex)) ? parent * 2 + 2 : leftChildIndex;
-            int swapIndex = (numbersArray[leftChildIndex] > numbersArray[rightChildIndex]) ? leftChildIndex : rightChildIndex;
+        while (isLeftChildExist(examinedParentIndex, lastIndex)) {
+            int leftChildIndex = examinedParentIndex * 2 + 1;
+            int rightChildIndex = (isRightChildExist(examinedParentIndex, lastIndex)) ? examinedParentIndex * 2 + 2 : leftChildIndex;
+            int swappedChildIndex = (numbersArray[leftChildIndex] > numbersArray[rightChildIndex]) ? leftChildIndex : rightChildIndex;
 
-            if (numbersArray[parent] >= numbersArray[swapIndex]) {
+            if (numbersArray[examinedParentIndex] >= numbersArray[swappedChildIndex]) {
                 break;
             }
 
-            swap(numbersArray, parent, swapIndex);
-            parent = swapIndex;
+            swap(numbersArray, examinedParentIndex, swappedChildIndex);
+            examinedParentIndex = swappedChildIndex;
         }
     }
 

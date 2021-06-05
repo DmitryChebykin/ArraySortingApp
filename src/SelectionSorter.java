@@ -7,18 +7,17 @@ public class SelectionSorter extends ArraySorter {
     private static void sortBySelection(double[] numbersArray) {
         int endIndex = numbersArray.length - 1;
 
-        for (int i = 0; i < endIndex; i++) {
-            double minValue = numbersArray[endIndex];
-            int minNumberIndex1 = endIndex;
+        for (int i = 0; i <= endIndex; i++) {
+            double minValue = numbersArray[i];
+            int minNumberIndex = i;
 
-            for (int j = i; j < endIndex; j++) {
+            for (int j = i + 1; j <= endIndex; j++) {
                 if (numbersArray[j] < minValue) {
-                    minNumberIndex1 = j;
+                    minNumberIndex = j;
                     minValue = numbersArray[j];
                 }
             }
 
-            int minNumberIndex = minNumberIndex1;
             swap(numbersArray, i, minNumberIndex);
         }
     }
