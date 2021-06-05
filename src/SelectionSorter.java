@@ -1,6 +1,6 @@
 public class SelectionSorter extends ArraySorter {
     @Check
-    private static void sort(double[] numbersArray) {
+    public static void sort(double[] numbersArray) {
         for (int i = 0; i < numbersArray.length; i++) {
             double minValue = numbersArray[i];
             int minNumberIndex = i;
