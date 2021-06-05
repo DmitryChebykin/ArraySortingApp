@@ -2,7 +2,6 @@ import java.util.Scanner;
 
 public class ArraySortingApp {
     public static void main(String[] args) {
-
         System.out.println("Номера сортировок:");
         System.out.println("BubbleSorter    - 0");
         System.out.println("HeapSorter      - 1");
