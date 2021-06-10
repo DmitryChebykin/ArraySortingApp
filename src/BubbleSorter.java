@@ -1,6 +1,6 @@
 public class BubbleSorter extends ArraySorter {
     @Check
-    private static void sort(double[] numbersArray) {
+    public static void sort(double[] numbersArray) {
         int maxIndex = numbersArray.length - 1;
 
         for (int i = maxIndex; i > 0; i--) {
