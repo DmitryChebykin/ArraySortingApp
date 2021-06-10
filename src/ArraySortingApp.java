@@ -19,7 +19,8 @@ public class ArraySortingApp {
                 "HeapSorter",
                 "InsertsSorter",
                 "QuickSorter",
-                "SelectionSorter"};
+                "SelectionSorter"
+        };
 
         new ArraySorterChecker(new String[]{classesNames[number]}).printMethodsCheckingInfo();
     }

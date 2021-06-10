@@ -17,7 +17,7 @@ public class HeapSorter extends ArraySorter {
 
     private static void buildHeap(double[] numbersArray) {
         int lastIndex = numbersArray.length - 1;
-        int mediumIndex = (lastIndex + 1) / 2 - 1;
+        int mediumIndex = numbersArray.length / 2 - 1;
 
         for (int i = mediumIndex; i >= 0; i--) {
             heapifyParent(numbersArray, i, lastIndex);
@@ -29,8 +29,12 @@ public class HeapSorter extends ArraySorter {
 
         while (isLeftChildExist(examinedParentIndex, lastIndex)) {
             int leftChildIndex = examinedParentIndex * 2 + 1;
-            int rightChildIndex = isRightChildExist(examinedParentIndex, lastIndex) ? examinedParentIndex * 2 + 2 : leftChildIndex;
-            int swappedChildIndex = numbersArray[leftChildIndex] > numbersArray[rightChildIndex] ? leftChildIndex : rightChildIndex;
+            int rightChildIndex = isRightChildExist(examinedParentIndex, lastIndex)
+                    ? examinedParentIndex * 2 + 2
+                    : leftChildIndex;
+            int swappedChildIndex = numbersArray[leftChildIndex] > numbersArray[rightChildIndex]
+                    ? leftChildIndex
+                    : rightChildIndex;
 
             if (numbersArray[examinedParentIndex] >= numbersArray[swappedChildIndex]) {
                 break;
@@ -42,10 +46,10 @@ public class HeapSorter extends ArraySorter {
     }
 
     private static boolean isLeftChildExist(int elementIndex, int lastIndex) {
-        return (2 * elementIndex + 1) <= lastIndex;
+        return 2 * elementIndex + 1 <= lastIndex;
     }
 
     private static boolean isRightChildExist(int elementIndex, int lastIndex) {
-        return (2 * elementIndex + 2) <= lastIndex;
+        return 2 * elementIndex + 2 <= lastIndex;
     }
 }

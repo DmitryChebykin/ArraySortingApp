@@ -5,22 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ArraySorterChecker {
-    private String[] checkedClassesNames;
+    private final String[] checkedClassesNames;
 
     public ArraySorterChecker(String[] checkedClassesNames) {
         this.checkedClassesNames = checkedClassesNames;
-    }
-
-    public static Class<?> getCheckedClass(String className) {
-        Class<?> arraySorterClass = null;
-
-        try {
-            arraySorterClass = Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return arraySorterClass;
     }
 
     private static TestData[] getDemoArraysSet() {
@@ -40,7 +28,7 @@ public class ArraySorterChecker {
         };
     }
 
-    private static List<Method> getCheckMarkedMethods(Class<?> CheckingClass) {
+    private List<Method> getCheckMarkedMethods(Class<?> CheckingClass) {
         List<Method> methods = new ArrayList<>();
 
         for (Method m : CheckingClass.getDeclaredMethods()) {
@@ -52,49 +40,62 @@ public class ArraySorterChecker {
         return methods;
     }
 
-    public void printMethodsCheckingInfo() {
-        for (String className : checkedClassesNames) {
-            TestData[] testData = getDemoArraysSet();
-            List<Method> methods = getCheckMarkedMethods(getCheckedClass(className));
-
-            for (TestData testSet : testData) {
-                printHeaderMessage(testSet);
-
-                for (Method m : methods) {
-                    printCheckingMessage(m, testSet);
-                }
-
-                System.out.println("-----------------------------------------------------------------");
-            }
-        }
-    }
-
-    private static void printHeaderMessage(TestData testData) {
+    private void printHeaderMessage(TestData testData) {
         System.out.println("-----------------------------------------------------------------");
         System.out.println("Unsorted array: " + Arrays.toString(testData.getUnsortedArray()));
         System.out.println("  Sorted array: " + Arrays.toString(testData.getSortedArray()));
     }
 
-    private static void printCheckingMessage(Method m, TestData testData) {
+    private void printCheckingMessage(Method m, TestData testData) {
         try {
-            double[] sortedArray = Arrays.copyOf(testData.getUnsortedArray(), testData.getUnsortedArray().length); //keep TestData fields unmodified
+            Object sortedArray = Arrays.copyOf(testData.getUnsortedArray(), testData.getUnsortedArray().length); //keep TestData fields unmodified
+
             m.invoke(null, sortedArray);
 
-            if (Arrays.equals(sortedArray, testData.getSortedArray())) {
+            if (Arrays.equals((double[]) sortedArray, testData.getSortedArray())) {
                 printSuccessMessage(m);
             } else {
-                printNotSuccessMessage(m, sortedArray);
+                printNotSuccessMessage(m, (double[]) sortedArray);
             }
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }
 
-    private static void printNotSuccessMessage(Method m, double[] resultArray) {
+    private void printNotSuccessMessage(Method m, double[] resultArray) {
         System.out.printf("!!! NOT SUCCESS sorting -  %15s : %s%n", (m.getDeclaringClass() + "." + m.getName()), Arrays.toString(resultArray));
     }
 
-    private static void printSuccessMessage(Method m) {
+    private void printSuccessMessage(Method m) {
         System.out.printf("%15s is SUCCESS sorting %n", m.getDeclaringClass() + "." + m.getName());
+    }
+
+    public Class<?> getCheckedClass(String className) {
+        Class<?> arraySorterClass = null;
+
+        try {
+            arraySorterClass = Class.forName(className);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return arraySorterClass;
+    }
+
+    public void printMethodsCheckingInfo() {
+        for (String className : checkedClassesNames) {
+            TestData[] testDataArray = getDemoArraysSet();
+            List<Method> methods = getCheckMarkedMethods(getCheckedClass(className));
+
+            for (TestData testData : testDataArray) {
+                printHeaderMessage(testData);
+
+                for (Method m : methods) {
+                    printCheckingMessage(m, testData);
+                }
+
+                System.out.println("-----------------------------------------------------------------");
+            }
+        }
     }
 }

@@ -9,9 +9,8 @@ public class BubbleSorter extends ArraySorter {
 
         for (int i = maxIndex; i > 0; i--) {
             boolean isSorted = true;
-            int lastIndex = i - 1;
 
-            for (int j = 0; j <= lastIndex; j++) {
+            for (int j = 0; j < i; j++) {
                 if (numbersArray[j] > numbersArray[j + 1]) {
                     swap(numbersArray, j, j + 1);
                     isSorted = false;

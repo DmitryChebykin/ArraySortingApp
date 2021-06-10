@@ -1,14 +1,14 @@
 public class SelectionSorter extends ArraySorter {
     @Check
     public static void sort(double[] numbersArray) {
-        for (int i = 0; i < numbersArray.length; i++) {
-            double minValue = numbersArray[i];
+        int lastCheckingIndex = numbersArray.length - 1;
+
+        for (int i = 0; i < lastCheckingIndex; i++) {
             int minNumberIndex = i;
 
             for (int j = i + 1; j < numbersArray.length; j++) {
-                if (numbersArray[j] < minValue) {
+                if (numbersArray[j] < numbersArray[minNumberIndex]) {
                     minNumberIndex = j;
-                    minValue = numbersArray[j];
                 }
             }
 
